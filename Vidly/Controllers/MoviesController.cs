@@ -24,23 +24,60 @@ namespace Vidly.Controllers
 
 
         // GET: Movies
-        [Route("movies/random")]
-
-        public ActionResult Random()
+        // [Route("movies/random")]
+        //
+        // public ActionResult Random()
+        // {
+        //     var shrek = new Movie() { Id = 1, Name = "Shrek" };
+        //     var customers = new List<Customer>
+        //     {
+        //         new Customer {Name = "Cust 1"},
+        //         new Customer {Name = "Cust 2"}
+        //     };
+        //     var viewModel = new RandomMovieViewModel
+        //     {
+        //         Movie = shrek,
+        //         Customers = customers
+        //     };
+        //     return View(viewModel);
+        // }
+        
+        // GET MOVIE DETAILS
+        [Route("movies/details/{id}")]
+        public ActionResult MovieDetail(int id)
         {
-            var shrek = new Movie() { Id = 1, Name = "Shrek" };
-            var customers = new List<Customer>
+            var flick = GetMovies().SingleOrDefault(m => m.Id == id);
+            if (flick == null)
             {
-                new Customer {Name = "Cust 1"},
-                new Customer {Name = "Cust 2"}
-            };
-            var viewModel = new RandomMovieViewModel
+                return HttpNotFound();
+            }
+            return Content(flick.Name);
+        }
+        
+        // GET ALL MOVIES
+        [Route("movies")]
+        public ActionResult Index()
+        {
+            var movies = GetMovies();
+
+            var viewModel = new AllMoviesViewModel
             {
-                Movie = shrek,
-                Customers = customers
+                Movies = movies
             };
             return View(viewModel);
         }
+
+        private List<Movie> GetMovies()
+        {
+            return new List<Movie>
+            {
+                new Movie {Id = 1, Name = "Psycho"},
+                new Movie {Id = 2, Name = "The Birds"},
+                new Movie {Id = 3, Name = "Vertigo"},
+            };
+        }
+        
+        
 
         
 
