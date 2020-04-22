@@ -67,7 +67,7 @@ namespace Vidly.Controllers
             return View(viewModel);
         }
 
-        private List<Movie> GetMovies()
+        private static List<Movie> GetMovies()
         {
             return new List<Movie>
             {
